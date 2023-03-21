@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,14 +20,13 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userId;
     @Column(nullable = false, unique = true, length = 50)
     private String username;
     @Column(nullable = false, unique = true, length = 50)
-    private String email;
+    private String help;
     @JsonIgnore
     @Column(nullable = false, length = 255)
     private String password;
@@ -43,9 +44,11 @@ public class UserModel implements Serializable {
     private String cpf;
     @Column
     private String imageUrl;
+    @CreationTimestamp
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime creationDate;
+    @UpdateTimestamp
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime lastUpdateDate;

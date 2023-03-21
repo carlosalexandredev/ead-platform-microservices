@@ -22,12 +22,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserModel> findById(UUID id) {
-        return userRepository.findById(id);
+    public Optional<UserModel> findById(UUID userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
     public void delete(UserModel userModel) {
         userRepository.delete(userModel);
+    }
+
+    @Override
+    public void save(UserModel userModel) {
+        userRepository.save(userModel);
+    }
+
+    @Override
+    public boolean existsByUsername(String userName) {
+        return userRepository.existsByUserName(userName);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

@@ -12,8 +12,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -23,11 +23,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") UUID id){
-        Optional<UserModel> userModelOptional = userService.findById(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<Object> getOneUser(@PathVariable(value = "userId") UUID userId){
+        Optional<UserModel> userModelOptional = userService.findById(userId);
         if(!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(userModelOptional.get());
     }
@@ -36,11 +36,11 @@ public class UserController {
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") UUID id){
         Optional<UserModel> userModelOptional = userService.findById(id);
         if(!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");
         }else {
             userService.delete(userModelOptional.get());
         }
-        return ResponseEntity.status(HttpStatus.OK).body("User deleted successful");
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted successful.");
     }
 
 }

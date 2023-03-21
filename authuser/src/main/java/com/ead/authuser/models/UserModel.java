@@ -24,9 +24,9 @@ public class UserModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userId;
     @Column(nullable = false, unique = true, length = 50)
-    private String username;
+    private String userName;
     @Column(nullable = false, unique = true, length = 50)
-    private String help;
+    private String email;
     @JsonIgnore
     @Column(nullable = false, length = 255)
     private String password;

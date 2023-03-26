@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +49,8 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(
             @PathVariable(value = "id") UUID id,
-            @RequestBody @JsonView(UserDTO.UserView.UserPut.class) UserDTO userDTO){
+            @RequestBody @Validated(UserDTO.UserView.UserPut.class)
+            @JsonView(UserDTO.UserView.UserPut.class) UserDTO userDTO){
         Optional<UserModel> userModelOptional = userService.findById(id);
         if(!userModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");
@@ -65,7 +67,8 @@ public class UserController {
     @PutMapping("/{id}/password")
     public ResponseEntity<Object> updatePassword(
             @PathVariable(value = "id") UUID id,
-            @RequestBody @JsonView(UserDTO.UserView.PasswordPut.class) UserDTO userDTO){
+            @RequestBody @Validated(UserDTO.UserView.PasswordPut.class)
+            @JsonView(UserDTO.UserView.PasswordPut.class) UserDTO userDTO){
         Optional<UserModel> userModelOptional = userService.findById(id);
         if(!userModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");
@@ -82,7 +85,8 @@ public class UserController {
     @PutMapping("/{id}/image")
     public ResponseEntity<Object> updateImage(
             @PathVariable(value = "id") UUID id,
-            @RequestBody @JsonView(UserDTO.UserView.ImagePut.class) UserDTO userDTO){
+            @RequestBody @Validated(UserDTO.UserView.ImagePut.class)
+            @JsonView(UserDTO.UserView.ImagePut.class) UserDTO userDTO){
         Optional<UserModel> userModelOptional = userService.findById(id);
         if(!userModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");

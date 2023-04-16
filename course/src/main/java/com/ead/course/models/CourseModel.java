@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -47,7 +49,8 @@ public class CourseModel implements Serializable {
     private CourseLevel courseLevel;
     @Column(nullable = false)
     private UUID userInstructor;
-    @OneToMany(mappedBy = "course")
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ModuleModel> modules;
 }

@@ -31,7 +31,7 @@ public class ModuleController {
             @PathVariable(value = "courseId") UUID courseId){
         List<ModuleModel> ModuleModelList = moduleService.findAllByCourse(courseId);
         if(ModuleModelList.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Courses Not Found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(ModuleModelList);
     }
@@ -42,8 +42,8 @@ public class ModuleController {
             @PathVariable(value = "moduleId") UUID moduleId
     ){
         Optional<ModuleModel> moduleModel = moduleService.findModuleIntoCourse(courseId, moduleId);
-        if(moduleModel.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Courses Not Found.");
+        if(!moduleModel.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(moduleModel);
     }
@@ -53,8 +53,8 @@ public class ModuleController {
             @RequestBody @Validated ModuleDTO moduleDTO,
             @PathVariable(value = "courseId") UUID courseId){
         Optional<CourseModel> courseModel = courseService.findById(courseId);
-        if(courseModel.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
+        if(!courseModel.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
         }
         var moduleModel = new ModuleModel();
         BeanUtils.copyProperties(moduleDTO, moduleModel);
@@ -75,7 +75,7 @@ public class ModuleController {
         var moduleModel = moduleModelOptional.get();
         moduleModel.setTitle(moduleDTO.getTitle());
         moduleModel.setDescription(moduleDTO.getDescription());
-        return ResponseEntity.status(HttpStatus.OK).body(moduleModel);
+        return ResponseEntity.status(HttpStatus.OK).body(moduleService.save(moduleModel));
     }
 
     @DeleteMapping("/courses/{courseId}/modules/{moduleId}")

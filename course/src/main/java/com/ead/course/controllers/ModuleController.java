@@ -39,8 +39,24 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.save(moduleModel));
     }
 
+    @PutMapping("/courses/{courseId}/modules/{moduleId}")
+    public ResponseEntity<Object> updateModule(
+            @PathVariable(value = "courseId") UUID courseId,
+            @PathVariable(value = "moduleId") UUID moduleId,
+            @RequestBody @Validated ModuleDTO moduleDTO) {
+
+        Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
+        if(!moduleModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
+        }
+        var moduleModel = moduleModelOptional.get();
+        moduleModel.setTitle(moduleDTO.getTitle());
+        moduleModel.setDescription(moduleDTO.getDescription());
+        return ResponseEntity.status(HttpStatus.OK).body(moduleModel);
+    }
+
     @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
-    public ResponseEntity<Object> deleteCourse(
+    public ResponseEntity<Object> deleteModule(
             @PathVariable(value = "courseId") UUID courseId,
             @PathVariable(value = "moduleId") UUID moduleId){
 

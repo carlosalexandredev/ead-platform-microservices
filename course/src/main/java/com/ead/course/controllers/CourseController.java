@@ -24,7 +24,7 @@ public class CourseController {
     @GetMapping
     public ResponseEntity<Object> findAllCourse(){
         List<CourseModel> courseModelList = courseService.findAll();
-        if(!courseModelList.isEmpty()){
+        if(courseModelList.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Courses Not Found.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(courseModelList);
@@ -33,7 +33,7 @@ public class CourseController {
     @GetMapping("/{courseId}")
     public ResponseEntity<Object> findByIdCourse(@PathVariable(value = "courseId") UUID courseId){
         Optional<CourseModel> courseModel = courseService.findById(courseId);
-        if(!courseModel.isPresent()){
+        if(courseModel.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(courseModel);
@@ -46,7 +46,7 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseModel));
     }
 
-    @PutMapping("/courseId")
+    @PutMapping("/{courseId}")
     public ResponseEntity<Object> updateCourse(
             @PathVariable(value = "courseId") UUID courseId,
             @RequestBody @Validated CourseDTO courseDTO){

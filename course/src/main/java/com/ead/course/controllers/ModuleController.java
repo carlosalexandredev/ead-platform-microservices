@@ -54,7 +54,7 @@ public class ModuleController {
             @PathVariable(value = "courseId") UUID courseId){
         Optional<CourseModel> courseModel = courseService.findById(courseId);
         if(!courseModel.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         }
         var moduleModel = new ModuleModel();
         BeanUtils.copyProperties(moduleDTO, moduleModel);
@@ -70,7 +70,7 @@ public class ModuleController {
 
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
         if(!moduleModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         }
         var moduleModel = moduleModelOptional.get();
         moduleModel.setTitle(moduleDTO.getTitle());

@@ -27,7 +27,7 @@ public class ModuleController {
     CourseService courseService;
 
     @GetMapping("/courses/{courseId}/modules")
-    public ResponseEntity<Object> findAllMouduleByCourse(
+    public ResponseEntity<Object> findAllModuleByCourse(
             @PathVariable(value = "courseId") UUID courseId){
         List<ModuleModel> ModuleModelList = moduleService.findAllByCourse(courseId);
         if(ModuleModelList.isEmpty()){

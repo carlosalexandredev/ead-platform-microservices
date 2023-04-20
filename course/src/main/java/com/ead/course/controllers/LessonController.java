@@ -27,7 +27,7 @@ public class LessonController {
     ModuleService moduleService;
 
     @GetMapping("/modules/{moduleId}/lessons")
-    public ResponseEntity<Object> findAllMouduleByCourse(
+    public ResponseEntity<Object> findAllLessonByModule(
             @PathVariable(value = "moduleId") UUID moduleId){
         List<LessonModel> lessonModelList = lessonService.findAllByModule(moduleId);
         if(lessonModelList.isEmpty()){
@@ -37,7 +37,7 @@ public class LessonController {
     }
 
     @GetMapping("/modules/{moduleId}/lessons/{lessonId}")
-    public ResponseEntity<Object> findByIdCourseModule(
+    public ResponseEntity<Object> findByIdLessonModule(
             @PathVariable(value = "moduleId") UUID moduleId,
             @PathVariable(value = "lessonId") UUID lessonId){
         Optional<LessonModel> lessonModelOptional = lessonService.findLessonIntoModule(moduleId, lessonId);

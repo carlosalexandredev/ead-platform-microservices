@@ -39,8 +39,7 @@ public class ModuleController {
     @GetMapping("/courses/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> findByIdCourseModule(
             @PathVariable(value = "courseId") UUID courseId,
-            @PathVariable(value = "moduleId") UUID moduleId
-    ){
+            @PathVariable(value = "moduleId") UUID moduleId){
         Optional<ModuleModel> moduleModel = moduleService.findModuleIntoCourse(courseId, moduleId);
         if(!moduleModel.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
@@ -67,7 +66,6 @@ public class ModuleController {
             @PathVariable(value = "courseId") UUID courseId,
             @PathVariable(value = "moduleId") UUID moduleId,
             @RequestBody @Validated ModuleDTO moduleDTO) {
-
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
         if(!moduleModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
@@ -82,7 +80,6 @@ public class ModuleController {
     public ResponseEntity<Object> deleteModule(
             @PathVariable(value = "courseId") UUID courseId,
             @PathVariable(value = "moduleId") UUID moduleId){
-
         Optional<ModuleModel> moduleModel = moduleService.findModuleIntoCourse(courseId, moduleId);
         if(!moduleModel.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");

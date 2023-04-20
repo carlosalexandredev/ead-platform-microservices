@@ -1,8 +1,6 @@
 package com.ead.course.controllers;
 
 import com.ead.course.dto.LessonDTO;
-import com.ead.course.dto.ModuleDTO;
-import com.ead.course.models.CourseModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.services.LessonService;
@@ -41,15 +39,31 @@ public class LessonController {
         return ResponseEntity.status(HttpStatus.CREATED).body(lessonService.save(lessonModel));
     }
 
+    @PutMapping("/modules/{moduleId}/lessons/{lessonId}")
+    public ResponseEntity<Object> updateLesson(
+            @PathVariable(value = "moduleId") UUID moduleId,
+            @PathVariable(value = "lessonId") UUID lessonId,
+            @RequestBody @Validated LessonDTO lessonDTO) {
+        Optional<LessonModel> lessonModelOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
+        if(!lessonModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+        }
+        var lessonModel = lessonModelOptional.get();
+        lessonModel.setTitle(lessonDTO.getTitle());
+        lessonModel.setDescription(lessonDTO.getDescription());
+        lessonModel.setVideoUrl(lessonDTO.getVideoUrl());
+        return ResponseEntity.status(HttpStatus.OK).body(lessonService.save(lessonModel));
+    }
+
     @DeleteMapping("/modules/{moduleId}/lessons/{lessonId}")
     public ResponseEntity<Object> deleteLesson(
             @PathVariable(value = "moduleId") UUID moduleId,
             @PathVariable(value = "lessonId") UUID lessonId){
-        Optional<LessonModel> lessonModel = lessonService.findLessonIntoModule(moduleId, lessonId);
-        if(!lessonModel.isPresent()){
+        Optional<LessonModel> lessonModelOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
+        if(!lessonModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
         }
-        lessonService.delete(lessonModel.get());
+        lessonService.delete(lessonModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Lesson deleted sucessfully.");
     }
 }

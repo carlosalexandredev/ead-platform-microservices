@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +25,27 @@ public class LessonController {
 
     @Autowired
     ModuleService moduleService;
+
+    @GetMapping("/modules/{moduleId}/lessons")
+    public ResponseEntity<Object> findAllMouduleByCourse(
+            @PathVariable(value = "moduleId") UUID moduleId){
+        List<LessonModel> lessonModelList = lessonService.findAllByModule(moduleId);
+        if(lessonModelList.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(lessonModelList);
+    }
+
+    @GetMapping("/modules/{moduleId}/lessons/{lessonId}")
+    public ResponseEntity<Object> findByIdCourseModule(
+            @PathVariable(value = "moduleId") UUID moduleId,
+            @PathVariable(value = "lessonId") UUID lessonId){
+        Optional<LessonModel> lessonModelOptional = lessonService.findLessonIntoModule(moduleId, lessonId);
+        if(!lessonModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(lessonModelOptional.get());
+    }
 
     @PostMapping("/modules/{moduleId}/lessons")
     public ResponseEntity<Object> saveLesson(

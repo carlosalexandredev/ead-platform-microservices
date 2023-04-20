@@ -3,14 +3,18 @@ package com.ead.course.controllers;
 import com.ead.course.dto.CourseDTO;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
+import com.ead.course.specifications.SpecificationsTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,12 +26,10 @@ public class CourseController {
     CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<Object> findAllCourse(){
-        List<CourseModel> courseModelList = courseService.findAll();
-        if(courseModelList.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Courses Not Found.");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(courseModelList);
+    public ResponseEntity<Page<CourseModel>> findAllCourses(
+            SpecificationsTemplate.CourseSpec spec,
+            @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")
@@ -55,7 +57,7 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found.");
         }
         var courseModel = courseModelOptional.get();
-        courseModel.setNome(courseDTO.getNome());
+        courseModel.setName(courseDTO.getName());
         courseModel.setDescription(courseDTO.getDescription());
         courseModel.setImageUrl(courseDTO.getImageUrl());
         courseModel.setCourseStatus(courseDTO.getCourseStatus());

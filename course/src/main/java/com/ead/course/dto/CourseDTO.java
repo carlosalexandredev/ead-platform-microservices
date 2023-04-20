@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 public class CourseDTO {
     @NotBlank
-    private String nome;
+    private String name;
     @NotBlank
     private String description;
     private String imageUrl;

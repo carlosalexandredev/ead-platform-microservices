@@ -9,7 +9,6 @@ import lombok.Data;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -28,7 +27,7 @@ public class CourseModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID courseId;
     @Column(nullable = false, length = 150)
-    private String nome;
+    private String name;
     @Column(nullable = false, length = 150)
     private String description;
     @Column

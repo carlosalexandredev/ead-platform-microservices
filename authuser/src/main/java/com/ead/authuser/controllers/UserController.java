@@ -81,7 +81,7 @@ public class UserController {
             userModel.setPhoneNunber(userDTO.getPhoneNumber());
             userModel.setCpf(userDTO.getCpf());
             userService.save(userModel);
-            log.debug("PUT updateUser userModel updated {} ", userModel.toString());
+            log.debug("PUT updateUser user updated {} ", userModel.getUserId());
             log.info("User updated succesfully userId {} ", userModel.getUserId());
         return ResponseEntity.status(HttpStatus.OK).body(userModel);
         }

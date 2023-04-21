@@ -22,5 +22,5 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
-    Page<UserModel> findAll(Pageable pageable, Specification<UserModel> spec);
+    Page<UserModel> findAll(Specification<UserModel> spec, Pageable pageable);
 }

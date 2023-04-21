@@ -50,9 +50,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") UUID id){
-        Optional<UserModel> userModelOptional = userService.findById(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<Object> getOneUser(@PathVariable(value = "userId") UUID userId){
+        Optional<UserModel> userModelOptional = userService.findById(userId);
         if(!userModelOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");
         }

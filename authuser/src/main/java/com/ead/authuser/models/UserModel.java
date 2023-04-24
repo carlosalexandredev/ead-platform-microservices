@@ -42,7 +42,7 @@ public class UserModel extends RepresentationModel<UserModel> implements Seriali
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
     @Column(length = 20)
-    private String phoneNunber;
+    private String phoneNumber;
     @Column(length = 20)
     private String cpf;
     @Column

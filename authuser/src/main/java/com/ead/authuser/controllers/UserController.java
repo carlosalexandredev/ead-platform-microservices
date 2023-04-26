@@ -85,7 +85,7 @@ public class UserController {
         }else {
             var userModel = userModelOptional.get();
             userModel.setFullName(userDTO.getFullName());
-            userModel.setPhoneNunber(userDTO.getPhoneNumber());
+            userModel.setPhoneNumber(userDTO.getPhoneNumber());
             userModel.setCpf(userDTO.getCpf());
             userService.save(userModel);
             log.debug("PUT updateUser user updated {} ", userModel.getUserId());

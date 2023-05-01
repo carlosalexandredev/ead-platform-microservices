@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Log4j2
 @Component
-public class UserClient {
+public class CourseClient {
 
     @Autowired
     RestTemplate restTemplate;
@@ -47,4 +47,6 @@ public class UserClient {
         log.info("Ending request /courses userId {} ", userId);
         return result.getBody();
     }
+
+
 }

@@ -39,6 +39,4 @@ public class InstructorController {
             return ResponseEntity.status(HttpStatus.OK).body(userModel);
         }
     }
-
-
 }

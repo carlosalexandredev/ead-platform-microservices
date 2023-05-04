@@ -4,6 +4,7 @@ import com.ead.course.dto.CourseDTO;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.specifications.SpecificationsTemplate;
+import com.ead.course.validation.CourserValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,9 @@ import java.util.UUID;
 public class CourseController {
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    CourserValidator courserValidator;
 
     @GetMapping
     public ResponseEntity<Page<CourseModel>> findAllCourses(
@@ -49,7 +54,11 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveCourse(@RequestBody @Validated CourseDTO courseDTO){
+    public ResponseEntity<Object> saveCourse(@RequestBody CourseDTO courseDTO, Errors erros){
+        courserValidator.validate(courseDTO, erros);
+        if(erros.hasErrors()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros.getAllErrors());
+        }
         var courseModel = new CourseModel();
         BeanUtils.copyProperties(courseDTO, courseModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseModel));

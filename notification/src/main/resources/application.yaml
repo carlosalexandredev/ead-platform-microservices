@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ead-notification
+
+eureka:
+  client:
+    serviceUrl:
+      defaltZone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost

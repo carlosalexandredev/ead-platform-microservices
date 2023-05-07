@@ -11,7 +11,7 @@
     <groupId>com.ead</groupId>
     <artifactId>authuser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>AuthUser</name>
+    <name>authuser</name>
     <description>AuthUser Microservice</description>
     <properties>
         <java.version>11</java.version>

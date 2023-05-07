@@ -4,7 +4,7 @@ import com.ead.course.dto.CourseDTO;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.specifications.SpecificationsTemplate;
-import com.ead.course.validation.CourserValidator;
+import com.ead.course.validation.CourseValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ public class CourseController {
     CourseService courseService;
 
     @Autowired
-    CourserValidator courserValidator;
+    CourseValidator courseValidator;
 
     @GetMapping
     public ResponseEntity<Page<CourseModel>> findAllCourses(
@@ -55,7 +55,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Object> saveCourse(@RequestBody CourseDTO courseDTO, Errors erros){
-        courserValidator.validate(courseDTO, erros);
+        courseValidator.validate(courseDTO, erros);
         if(erros.hasErrors()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros.getAllErrors());
         }

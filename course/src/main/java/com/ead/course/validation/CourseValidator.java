@@ -17,7 +17,7 @@ import java.util.UUID;
 
 
 @Component
-public class CourserValidator implements Validator {
+public class CourseValidator implements Validator {
 
     @Autowired
     @Qualifier("defaultValidator")

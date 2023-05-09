@@ -48,13 +48,22 @@ public class UserCourseController {
             @RequestBody @Valid UserCourseDTO userCourseDTO){
         Optional<UserModel> userModelOptional = userService.findById(userId);
         if(!userModelOptional.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not foud.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
         if(userCourseService.existsByUserAndCourseId(userModelOptional.get(), userCourseDTO.getCourseId())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro: subscription already exists!");
         }
         UserCourseModel userCourseModel = userCourseService.save(userModelOptional.get().convertToUserCourseModel(userCourseDTO.getCourseId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(userCourseModel);
+    }
+
+    @DeleteMapping("/users/courses/{courseId}")
+    public ResponseEntity<Object> deleteUserCourseByCourse(@PathVariable(value = "courseId") UUID courseId) {
+        if(!userCourseService.existsByUseCourseId(courseId)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found.");
+        }
+        userCourseService.deleteUserCourseByCourse(courseId);
+        return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully.");
     }
 
 }

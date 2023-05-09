@@ -7,6 +7,7 @@ import com.ead.authuser.service.UserCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
@@ -23,5 +24,16 @@ public class UserCouseServiceImpl implements UserCourseService {
     @Override
     public UserCourseModel save(UserCourseModel userCourseModel) {
         return userCourseRepository.save(userCourseModel);
+    }
+
+    @Override
+    public boolean existsByUseCourseId(UUID courseId) {
+        return userCourseRepository.existsByCourseId(courseId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserCourseByCourse(UUID courseId) {
+        userCourseRepository.deleteAllByCourseId(courseId);
     }
 }

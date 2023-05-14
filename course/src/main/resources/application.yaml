@@ -23,12 +23,7 @@ spring:
 logging:
   level:
     com.ead: TRACE
-    org.springframework.web: DEBUG
-
-ead:
-  api:
-    url:
-      authuser: 'http://ead-authuser-service/ead-authuser'
+    org.springframework.web: DEBUG'
 
 eureka:
   client:

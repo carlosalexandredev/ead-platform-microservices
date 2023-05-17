@@ -14,7 +14,7 @@ A comunicação entre os serviços é geralmente baseada em APIs, que podem ser 
 
 ## Microservices Architecture with Spring EAD
 
-Serviço de plataforma de aprendizagem EAD
+Plataforma de aprendizagem EAD (Ensino a Distância)
 
 O serviço é composto por sete microsserviços:
  - Api Gateway: ponto de entrada para todas as solicitações de API do sistema
